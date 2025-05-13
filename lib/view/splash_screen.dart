@@ -1,7 +1,10 @@
 // ignore_for_file: use_build_context_synchronously
 
 import 'package:flutter/material.dart';
+import 'package:quiz_app/app/app_info.dart';
 import 'package:quiz_app/app/routes/navigate.dart';
+import 'package:quiz_app/utils/app_colors.dart';
+import 'package:quiz_app/utils/app_theme.dart';
 import 'package:quiz_app/view/home_screen.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -23,9 +26,16 @@ class _SplashScreenState extends State<SplashScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Center(
-        child: Image.asset('asset/quizapp_app_logo_transparent.png'),
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      theme: ThemeData(scaffoldBackgroundColor: AppColors.appColor),
+      darkTheme: AppTheme.darkTheme,
+      themeMode: ThemeMode.system,
+      title: appName,
+      home: Scaffold(
+        body: Center(
+          child: Image.asset('asset/quizapp_app_logo_transparent.png'),
+        ),
       ),
     );
   }

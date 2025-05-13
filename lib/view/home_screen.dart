@@ -1,5 +1,11 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
+import 'package:quiz_app/app/routes/navigate.dart';
 import 'package:quiz_app/utils/app_colors.dart';
+import 'package:quiz_app/view/create_quiz_screen.dart';
+import 'package:quiz_app/view/quiz_screen.dart';
+import 'package:quiz_app/widgets/card/category_card.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -9,11 +15,49 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  // List of quiz categories
   final List<Map<String, dynamic>> _categories = [
-    {'name': 'Math', 'icon': Icons.calculate, 'color': Colors.blue},
-    {'name': 'Physics', 'icon': Icons.science, 'color': Colors.green},
-    {'name': 'English', 'icon': Icons.menu_book, 'color': Colors.orange},
+    {'name': 'Data Structures', 'icon': Icons.storage, 'color': Colors.blue},
+    {'name': 'Algorithms', 'icon': Icons.timeline, 'color': Colors.deepPurple},
+    {'name': 'Computer Networks', 'icon': Icons.router, 'color': Colors.green},
+    {'name': 'Operating Systems', 'icon': Icons.memory, 'color': Colors.teal},
+    {
+      'name': 'Database Systems',
+      'icon': Icons.storage_rounded,
+      'color': Colors.indigo,
+    },
+    {
+      'name': 'Software Engineering',
+      'icon': Icons.engineering,
+      'color': Colors.orange,
+    },
+    {'name': 'Web Development', 'icon': Icons.web, 'color': Colors.cyan},
+    {
+      'name': 'Mobile App Dev',
+      'icon': Icons.phone_android,
+      'color': Colors.lightBlue,
+    },
+    {'name': 'Cyber Security', 'icon': Icons.security, 'color': Colors.red},
+    {
+      'name': 'Machine Learning',
+      'icon': Icons.auto_graph,
+      'color': Colors.purple,
+    },
+    {
+      'name': 'Artificial Intelligence',
+      'icon': Icons.smart_toy,
+      'color': Colors.pinkAccent,
+    },
+    {'name': 'Cloud Computing', 'icon': Icons.cloud, 'color': Colors.blueGrey},
+    {
+      'name': 'Programming Concepts',
+      'icon': Icons.code,
+      'color': Colors.deepOrange,
+    },
+    {
+      'name': 'Version Control (Git)',
+      'icon': Icons.merge_type,
+      'color': Colors.brown,
+    },
   ];
 
   @override
@@ -21,23 +65,14 @@ class _HomeScreenState extends State<HomeScreen> {
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
-        title: const Text(
-          'QUIZ APP',
-          style: TextStyle(fontWeight: FontWeight.bold),
-        ),
-        centerTitle: true,
+
+        title: Text('QUIZ APP', style: TextStyle(fontWeight: FontWeight.bold)),
         actions: [
-          Padding(
-            padding: const EdgeInsets.only(right: 16.0),
-            child: GestureDetector(
-              onTap: () {
-                // Handle profile tap
-              },
-              child: const CircleAvatar(
-                backgroundColor: AppColors.appColor,
-                child: Icon(Icons.person, color: Colors.white),
-              ),
-            ),
+          IconButton(
+            onPressed: () {
+              _showCategoryBottomSheet(context);
+            },
+            icon: Icon(Icons.add_circle_outline_rounded),
           ),
         ],
       ),
@@ -60,100 +95,122 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
                 itemCount: _categories.length,
                 itemBuilder: (context, index) {
-                  return CategoryCard(
-                    name: _categories[index]['name'],
-                    icon: _categories[index]['icon'],
-                    color: _categories[index]['color'],
-                    onTap: () {
-                      // Handle category selection
-                    },
+                  return Padding(
+                    padding: const EdgeInsets.fromLTRB(3, 1, 3, 3),
+                    child: CategoryCard(
+                      name: _categories[index]['name'],
+                      icon: _categories[index]['icon'],
+                      color: _categories[index]['color'],
+                      onTap: () {
+                        Navigate.to(
+                          context,
+                          QuizScreen(category: _categories[index]['name']),
+                        );
+                      },
+                    ),
                   );
                 },
               ),
             ),
+            const SizedBox(height: 20),
           ],
         ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          // Handle FAB tap
-        },
-        backgroundColor: AppColors.appColor,
-        child: const Icon(Icons.add),
       ),
     );
   }
-}
 
-class CategoryCard extends StatelessWidget {
-  final String name;
-  final IconData icon;
-  final Color color;
-  final VoidCallback onTap;
-
-  const CategoryCard({
-    super.key,
-    required this.name,
-    required this.icon,
-    required this.color,
-    required this.onTap,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: onTap,
-      child: Container(
-        decoration: BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.circular(12.0),
-          boxShadow: [
-            BoxShadow(
-              color: Colors.grey.withOpacity(0.2),
-              spreadRadius: 2,
-              blurRadius: 5,
-              offset: const Offset(0, 3),
-            ),
-          ],
-        ),
-        child: Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: Row(
-            children: [
-              Container(
-                padding: const EdgeInsets.all(12.0),
-                decoration: BoxDecoration(
-                  color: color.withOpacity(0.2),
-                  borderRadius: BorderRadius.circular(10.0),
-                ),
-                child: Icon(icon, color: color, size: 32),
-              ),
-              const SizedBox(width: 20),
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text(
-                      name,
-                      style: const TextStyle(
-                        fontSize: 20,
-                        fontWeight: FontWeight.bold,
+  void _showCategoryBottomSheet(BuildContext context) {
+    showModalBottomSheet(
+      context: context,
+      isScrollControlled: true,
+      backgroundColor: Theme.of(context).colorScheme.surface,
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
+      ),
+      builder: (context) {
+        return DraggableScrollableSheet(
+          initialChildSize: 0.7,
+          minChildSize: 0.5,
+          maxChildSize: 0.9,
+          expand: false,
+          builder: (context, scrollController) {
+            return Container(
+              padding: const EdgeInsets.all(16),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Center(
+                    child: Container(
+                      width: 40,
+                      height: 5,
+                      decoration: BoxDecoration(
+                        color: Theme.of(
+                          context,
+                        ).colorScheme.onSurface.withOpacity(0.3),
+                        borderRadius: BorderRadius.circular(20),
                       ),
                     ),
-                    const SizedBox(height: 4),
-                    Text(
-                      'Start quiz in $name category',
-                      style: TextStyle(color: Colors.grey[600]),
+                  ),
+                  const SizedBox(height: 16),
+                  Row(
+                    children: [
+                      Icon(Icons.add_circle_outline, color: AppColors.appColor),
+                      const SizedBox(width: 12),
+                      Text(
+                        'Create Quiz',
+                        style: TextStyle(
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold,
+                          color: Theme.of(context).colorScheme.onSurface,
+                        ),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 6),
+                  Text(
+                    'Select a category for your new quiz',
+                    style: TextStyle(
+                      color: Theme.of(
+                        context,
+                      ).colorScheme.onSurface.withOpacity(0.7),
                     ),
-                  ],
-                ),
+                  ),
+                  const SizedBox(height: 16),
+                  Divider(),
+                  Expanded(
+                    child: ListView.builder(
+                      controller: scrollController,
+                      itemCount: _categories.length,
+                      itemBuilder: (context, index) {
+                        return ListTile(
+                          leading: CircleAvatar(
+                            backgroundColor: AppColors.appColor,
+                            child: Icon(
+                              _categories[index]['icon'],
+                              color: Colors.white,
+                            ),
+                          ),
+                          title: Text(_categories[index]['name']),
+                          trailing: Icon(Icons.arrow_forward_ios, size: 16),
+                          onTap: () {
+                            Navigator.pop(context);
+                            Navigate.to(
+                              context,
+                              CreateQuizScreen(
+                                category: _categories[index]['name'],
+                              ),
+                            );
+                          },
+                        );
+                      },
+                    ),
+                  ),
+                ],
               ),
-              const Icon(Icons.arrow_forward_ios, color: Colors.grey),
-            ],
-          ),
-        ),
-      ),
+            );
+          },
+        );
+      },
     );
   }
 }
