@@ -127,11 +127,7 @@ class _QuizScreenState extends State<QuizScreen>
 
                   ScaffoldMessenger.of(context).showSnackBar(
                     SnackBar(
-                      behavior: SnackBarBehavior.floating,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(16),
-                      ),
-                      margin: const EdgeInsets.all(16),
+                      backgroundColor: AppColors.appColor,
                       content: Text(
                         'All questions in "$category" have been deleted',
                       ),
@@ -474,15 +470,11 @@ class _QuizScreenState extends State<QuizScreen>
                   debugPrint('Error resetting quiz: $e');
                   ScaffoldMessenger.of(context).showSnackBar(
                     SnackBar(
-                      behavior: SnackBarBehavior.floating,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(16),
-                      ),
-                      margin: const EdgeInsets.all(16),
+                      backgroundColor: AppColors.appColor,
+
                       content: const Text(
                         'Failed to reset quiz. Please try again.',
                       ),
-                      backgroundColor: AppColors.appColor,
                     ),
                   );
                 }

@@ -1,4 +1,4 @@
-# 📚 quiz_app
+# QUIZ APP
 
 A Flutter-based quiz application built to deepen understanding of Dart object-oriented programming (OOP), state management using Provider, and scalable UI development.
 
@@ -22,3 +22,22 @@ This project serves as a hands-on learning tool to:
 - State management with **Provider**
 - Reusable components and clean folder structure
 - Follows Dart OOP and Flutter best practices
+
+---
+
+## Screenshots
+
+![Screenshot](doc/screenshot/desktop_01.png)
+
+
+---
+
+## Download - Android App / Windows / Web
+
+[doc/applications](doc/applications/)
+
+---
+
+## License
+
+This project is licensed under the terms of the [MIT License](./LICENSE).

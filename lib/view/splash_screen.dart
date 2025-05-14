@@ -1,5 +1,7 @@
 // ignore_for_file: use_build_context_synchronously
 
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:quiz_app/app/app_info.dart';
 import 'package:quiz_app/app/routes/navigate.dart';
@@ -15,13 +17,22 @@ class SplashScreen extends StatefulWidget {
 }
 
 class _SplashScreenState extends State<SplashScreen> {
+  Timer? _timer;
   @override
   void initState() {
     super.initState();
-    Future.delayed(
-      Duration(seconds: 4),
-      () => {Navigate.to(context, HomeScreen())},
-    );
+    _timer = Timer(const Duration(seconds: 4), _navigateToNext);
+  }
+
+  void _navigateToNext() {
+    if (!mounted) return;
+    Navigate.to(context, HomeScreen());
+  }
+
+  @override
+  void dispose() {
+    _timer?.cancel();
+    super.dispose();
   }
 
   @override

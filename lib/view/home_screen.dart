@@ -62,10 +62,18 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
+    double screenWidth = MediaQuery.of(context).size.width;
+    int crossAxisCount = 1;
+
+    if (screenWidth > 1000) {
+      crossAxisCount = 3;
+    } else if (screenWidth > 500) {
+      crossAxisCount = 2;
+    }
+
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
-
         title: Text('QUIZ APP', style: TextStyle(fontWeight: FontWeight.bold)),
         actions: [
           IconButton(
@@ -88,10 +96,11 @@ class _HomeScreenState extends State<HomeScreen> {
             const SizedBox(height: 20),
             Expanded(
               child: GridView.builder(
-                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 1,
+                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: crossAxisCount,
                   childAspectRatio: 3,
                   mainAxisSpacing: 16,
+                  crossAxisSpacing: 16,
                 ),
                 itemCount: _categories.length,
                 itemBuilder: (context, index) {

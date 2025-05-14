@@ -237,19 +237,19 @@ class _CreateQuizScreenState extends State<CreateQuizScreen> {
 
     if (!mounted) return;
 
-    Navigator.pop(context);
-    Navigator.pop(context);
-
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
-        behavior: SnackBarBehavior.floating,
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+        backgroundColor: AppColors.appColor,
         content: Text(
           'All questions in "${widget.category}" have been deleted',
         ),
-        margin: EdgeInsets.all(16),
       ),
     );
+
+    await Future.delayed(Duration(milliseconds: 300));
+
+    Navigator.pop(context);
+    Navigator.pop(context);
   }
 
   void _saveQuestion() async {
