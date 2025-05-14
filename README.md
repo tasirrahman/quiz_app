@@ -25,19 +25,21 @@ This project serves as a hands-on learning tool to:
 
 ---
 
-## Screenshots
+## Preview
 
-![Screenshot](doc/screenshot/desktop_01.png)
+![Screenshot 1](doc/presentation/image1.png)
+![Screenshot 2](doc/presentation/image2.png)
+![Screenshot 3](doc/presentation/image3.png)
 
 
 ---
 
 ## Download - Android App / Windows / Web
 
-[doc/applications](doc/applications/)
+[DOWNLOAD](doc/applications/)
 
 ---
 
 ## License
 
-This project is licensed under the terms of the [MIT License](./LICENSE).
+This project is licensed under the terms of the [MIT License](./LICENSE.md).
